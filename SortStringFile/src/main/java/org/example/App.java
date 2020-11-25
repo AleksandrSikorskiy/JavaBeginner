@@ -72,8 +72,7 @@ class SortStringFile {
                 errsort = true;
             } catch (IOException ex) {
                 System.out.println("class SortStringFile SortFile Error !");
-                System.out.println("class SortStringFile SortFile Error !!!!");
-                errsort = true;
+                errsort = false;
             }
         }
         return errsort;
