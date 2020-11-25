@@ -1,55 +1,37 @@
 package org.example;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
-
+import java.util.Scanner;
 
 class App {
 
-    class MiniArr {
-        String[] miniarrs = new String[100];
-        int[] miniarri = new int[100];
+    public static void main(String[] args) throws FileNotFoundException{
+        getWordCount("C:\\Install\\word.txt");
     }
 
-    class MaxiArr {
-        String[] miniarrs = new String[500];
-        int[] miniarri = new int[500];
-    }
-
-    MiniArr marr=new MiniArr();
-
-    MiniArr strokatowordarr(String linein) {
-     MiniArr mini = new MiniArr();
-     int j=0;
-     while (j<100) {
-
-      j=j+1;
-     }
-     return  mini;
-    }
-
-
-    public static void main(String[] args) {
-        MaxiArr maxiArr = new MaxiArr();
-        MiniArr miniArr = new MiniArr();
+    public static void getWordCount(String filename) throws FileNotFoundException{
+        String[] maxarr=new String[5000];
+        File file = new File(filename);
+        Scanner scanner = new Scanner(file);
         int imax=0;
-        int imin = 0;
-
-        try {
-            File FileSource = new File("c:\\Install\\word.txt");
-            FileReader fileR = new FileReader(FileSource);
-            BufferedReader bufRead = new BufferedReader(fileR);
-            String line;
-            int i = 0;
-            while ((line = bufRead.readLine()) != null) {
-                miniArr=strokatowordarr(line);
-                i = i + 1;
+        String linestr="";
+        while (scanner.hasNextLine()) {
+            String[] minarr= scanner.nextLine().split(" ");
+            for (int i = 0; i < minarr.length; i++) {
+                linestr=minarr[i].trim();
+                if (!"".equals(linestr))  /**(linestr != "")**/ {
+                    maxarr[imax]=linestr;
+                    imax++;
+                }
             }
-            bufRead.close();
-            fileR.close();
-        } catch (IOException ex) {
-            System.out.println("class KolWordInFile (" + pathFileSource + ") Error File not found !");
         }
+
+        System.out.println(Arrays.toString(maxarr));
+        scanner.close();
+    }
+}
       /**  открываем  файл **/
       /**          читаем строку **/
         /** обнуляем мини **/
@@ -57,9 +39,3 @@ class App {
         /**        добавляем в макси **/
         /** следующее чтение **/
         /**        выводим на экран **/
-
-
-
-    }
-}
-}
