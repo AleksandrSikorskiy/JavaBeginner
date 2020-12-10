@@ -13,7 +13,7 @@ class Tseawar {
     String[] poleg = new String[7];
     String[] polem = new String[7];
     String[] arrc = {"0", "1"};
-    String[] arrf = {"0","1","2","3","4","5","6"};
+    String[] arrf = {"0", "1", "2", "3", "4", "5", "6"};
     String[] arrw = {"A", "B", "C", "D", "E", "F", "G"};
 
     void check() {
@@ -27,9 +27,13 @@ class Tseawar {
                 y = y + 1;
             }
         }
-        if ((z == 0)|(y == 0)) {
-            if (z == 0) {System.out.println("Вы победили");}
-            if (y == 0) {System.out.println("Компьютер победил");}
+        if ((z == 0) | (y == 0)) {
+            if (z == 0) {
+                System.out.println("Вы победили");
+            }
+            if (y == 0) {
+                System.out.println("Компьютер победил");
+            }
             pobeda = false;
         }
     }
@@ -126,92 +130,97 @@ class Tseawar {
                 System.out.println("Попал");
             }
 
-        } else {System.out.println("Вы выстрелили за поле боя");}
-    }
-        void setm() {
-            String buf = "";
-            String s1;
-            String s2;
-            int rand = 0;
-            rand = (int) (Math.random() * 7);
-            s1 = arrw[rand];
-            rand = (int) (Math.random() * 7);
-            s2 = arrf[rand];
-            buf = s1 + s2;
-            System.out.println("Противник стреляет " + buf);
-            int x = 15;
-            int y = 15;
-            if (buf.contains("A")) {
-                x = 0;
-            }
-            if (buf.contains("B")) {
-                x = 1;
-            }
-            if (buf.contains("C")) {
-                x = 2;
-            }
-            if (buf.contains("D")) {
-                x = 3;
-            }
-            if (buf.contains("E")) {
-                x = 4;
-            }
-            if (buf.contains("F")) {
-                x = 5;
-            }
-            if (buf.contains("G")) {
-                x = 6;
-            }
-            if (buf.contains("0")) {
-                y = 0;
-            }
-            if (buf.contains("1")) {
-                y = 1;
-            }
-            if (buf.contains("2")) {
-                y = 2;
-            }
-            if (buf.contains("3")) {
-                y = 3;
-            }
-            if (buf.contains("4")) {
-                y = 4;
-            }
-            if (buf.contains("5")) {
-                y = 5;
-            }
-            if (buf.contains("6")) {
-                y = 6;
-            }
-            if ((x < 15) && (y < 15)) {
-                String si = polem[x].substring(y, y + 1);
-                if (si.equals("0")) {
-                    polem[x] = polem[x].substring(0, y) + "." + polem[x].substring(y + 1);
-                    System.out.println("противник промазал " + buf);
-                }
-                if (si.equals("1")) {
-                    polem[x] = polem[x].substring(0, y) + "X" + poles[x].substring(y + 1);
-                    System.out.println("противник попал " + buf);
-                }
-
-            }  else {System.out.println("Компьютер выстрелил за поле боя"+buf);}
+        } else {
+            System.out.println("Вы выстрелили за поле боя");
         }
     }
 
+    void setm() {
+        String buf = "";
+        String s1;
+        String s2;
+        int rand = 0;
+        rand = (int) (Math.random() * 7);
+        s1 = arrw[rand];
+        rand = (int) (Math.random() * 7);
+        s2 = arrf[rand];
+        buf = s1 + s2;
+        System.out.println("Противник стреляет " + buf);
+        int x = 15;
+        int y = 15;
+        if (buf.contains("A")) {
+            x = 0;
+        }
+        if (buf.contains("B")) {
+            x = 1;
+        }
+        if (buf.contains("C")) {
+            x = 2;
+        }
+        if (buf.contains("D")) {
+            x = 3;
+        }
+        if (buf.contains("E")) {
+            x = 4;
+        }
+        if (buf.contains("F")) {
+            x = 5;
+        }
+        if (buf.contains("G")) {
+            x = 6;
+        }
+        if (buf.contains("0")) {
+            y = 0;
+        }
+        if (buf.contains("1")) {
+            y = 1;
+        }
+        if (buf.contains("2")) {
+            y = 2;
+        }
+        if (buf.contains("3")) {
+            y = 3;
+        }
+        if (buf.contains("4")) {
+            y = 4;
+        }
+        if (buf.contains("5")) {
+            y = 5;
+        }
+        if (buf.contains("6")) {
+            y = 6;
+        }
+        if ((x < 15) && (y < 15)) {
+            String si = polem[x].substring(y, y + 1);
+            if (si.equals("0")) {
+                polem[x] = polem[x].substring(0, y) + "." + polem[x].substring(y + 1);
+                System.out.println("противник промазал " + buf);
+            }
+            if (si.equals("1")) {
+                polem[x] = polem[x].substring(0, y) + "X" + poles[x].substring(y + 1);
+                System.out.println("противник попал " + buf);
+            }
 
-    public class App {
-        public static void main(String[] args) {
-            Tseawar seawar = new Tseawar();
-            seawar.newgame();
+        } else {
+            System.out.println("Компьютер выстрелил за поле боя" + buf);
+        }
+    }
+}
+
+
+public class App {
+    public static void main(String[] args) {
+        Tseawar seawar = new Tseawar();
+        seawar.newgame();
+        seawar.print();
+        while (seawar.pobeda) {
+            Scanner ids = new Scanner(System.in);
+            System.out.print("Куда стреляем: ");
+            String id = ids.nextLine();
+            seawar.set(id);
+            seawar.setm();
             seawar.print();
-            while (seawar.pobeda) {
-                Scanner ids = new Scanner(System.in);
-                System.out.print("Куда стреляем: ");
-                String id = ids.nextLine();
-                seawar.set(id);
-                seawar.setm();
-                seawar.print();
-                seawar.check();
-            }
+            seawar.check();
         }
     }
+}
