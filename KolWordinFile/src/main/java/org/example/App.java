@@ -38,6 +38,7 @@ class App {
             FileWriter bufWrite = null;
             bufWrite = new FileWriter(fileDestination);
             Arrays.sort(maxarr);
+
             int k = 0;
             int kol = 1;
             for (k = 0; k < 4999; k=k+1) {
@@ -48,12 +49,14 @@ class App {
                     kol = 1;
                 }
              }
+            bufWrite.write(maxarr[k] +" "+ kol + "\r" + "\n");
+
             scanner.close();
             bufWrite.close();
         } catch (IOException e){
             e.printStackTrace();
         }
-       /** System.out.println(Arrays.toString(maxarr)); **/
+       System.out.println(Arrays.toString(maxarr));
 
     }
 }
