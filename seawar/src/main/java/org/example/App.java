@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
-        Gseawar seawar = new Gseawar();
+        Gseawar seawar = new Gseawar(7);
         seawar.newgame();
         seawar.printallmap();
         while (seawar.pobeda) {
