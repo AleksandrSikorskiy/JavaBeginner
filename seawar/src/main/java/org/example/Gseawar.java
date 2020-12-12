@@ -5,13 +5,17 @@ import java.lang.String;
  public class Gseawar {
         int quadsize=7;
         boolean pobeda = true;
+        String chrpusto="0";
+        String chrship="1";
+        String chrpopal="X";
+        String chrmimo=".";
         String[] warmapmyfire = new String[quadsize];
         String[] warmapvs = new String[quadsize];
         String[] warmapmy = new String[quadsize];
-        String[] arrfillmap = {"0", "1"}; //0-пусто 1-корабль
+        String[] arrfillmap = {chrpusto, chrship}; //0-пусто 1-корабль
         String arrxindex = "0123456789";
         String[] arryindex = {"A", "B", "C", "D", "E", "F", "G","H","I","J"};
-
+        // индекс символа в массиве
         int checkarrindex(int numchar,String searchstr,String[] arrindex){
             int res=99;
             String poiskstr=searchstr.substring(numchar,numchar + 1);
@@ -29,10 +33,10 @@ import java.lang.String;
             boolean mypobeda=true;
             boolean vspobeda=true;
             for (int i = 0; i < quadsize; i++) {
-                if (warmapvs[i].contains("1")) {
+                if (warmapvs[i].contains(chrship)) {
                     mypobeda=false;
                 }
-                if (warmapmy[i].contains("1")) {
+                if (warmapmy[i].contains(chrship)) {
                     vspobeda=false;
                 }
             }
@@ -55,16 +59,13 @@ import java.lang.String;
                 warmapmy[i] = strxmapmy;
             }
         }
-
+            //  вывод карты выстелов и попаданий компютера
         void printallmap() {
             System.out.println("поле компа| моё поле боя");
             for (int i = 0; i < quadsize; i++) {
-                int a = i + 65;
-                char b = (char) a;
-                System.out.println(b + " " + warmapmyfire[i] + " | " + warmapmy[i]);
-
+                System.out.println(arryindex[i] + " " + warmapmyfire[i] + " | " + warmapmy[i]);
             }
-            System.out.println("  0123456 | 0123456");
+            System.out.println("  "+arrxindex.substring(0,quadsize)+" | "+arrxindex.substring(0,quadsize));
         }
 
         void fireonmapmy(String buf) {
@@ -74,18 +75,18 @@ import java.lang.String;
             //определяем попал ли я в корабль или промазал и делаем пометку выстрелов на картах боя
             if ((x < quadsize) && (y < quadsize)) {
                 String si = warmapvs[y].substring(x, x + 1);
-                if (si.equals("0")) { //моя карта выстрелов
+                if (si.equals(chrpusto)) { //моя карта выстрелов
                     StringBuilder changeCh1 = new StringBuilder(warmapmyfire[y]);
-                    changeCh1.setCharAt(x, '.');
+                    changeCh1.setCharAt(x, chrmimo);
                     warmapmyfire[y]= changeCh1.toString();
                     System.out.println("Мимо");
                 }
-                if (si.equals("1")) { //моя карта выстрелов и невидимая карта противника
+                if (si.equals(chrship)) { //моя карта выстрелов и невидимая карта противника
                     StringBuilder changeCh2 = new StringBuilder(warmapmyfire[y]);
-                    changeCh2.setCharAt(x, 'X');
+                    changeCh2.setCharAt(x, chrpopal);
                     warmapmyfire[y]= changeCh2.toString();
                     StringBuilder changeCh3 = new StringBuilder(warmapvs[y]);
-                    changeCh3.setCharAt(x, 'X');
+                    changeCh3.setCharAt(x, chrpopal);
                     warmapvs[y]= changeCh3.toString();
                     System.out.println("Попал");
                 }
@@ -110,12 +111,12 @@ import java.lang.String;
             //определяем попал компьютер или нет
             if ((x < quadsize) && (y < quadsize)) {
                 String si = warmapmy[x].substring(y, y + 1);
-                if (si.equals("0")) {
-                    warmapmy[x] = warmapmy[x].substring(0, y) + "." + warmapmy[x].substring(y + 1);
+                if (si.equals(chrpusto)) {
+                    warmapmy[x] = warmapmy[x].substring(0, y) + chrmimo + warmapmy[x].substring(y + 1);
                     System.out.println("противник промазал " + buf);
                 }
-                if (si.equals("1")) {
-                    warmapmy[x] = warmapmy[x].substring(0, y) + "X" + warmapmyfire[x].substring(y + 1);
+                if (si.equals(chrship)) {
+                    warmapmy[x] = warmapmy[x].substring(0, y) + chrpopal + warmapmyfire[x].substring(y + 1);
                     System.out.println("противник попал " + buf);
                 }
 
