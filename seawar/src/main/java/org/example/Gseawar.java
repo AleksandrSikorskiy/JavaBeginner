@@ -77,16 +77,16 @@ import java.lang.String;
                 String si = warmapvs[y].substring(x, x + 1);
                 if (si.equals(chrpusto)) { //моя карта выстрелов
                     StringBuilder changeCh1 = new StringBuilder(warmapmyfire[y]);
-                    changeCh1.setCharAt(x, chrmimo);
+                    changeCh1.replace(x,x+1,chrmimo);
                     warmapmyfire[y]= changeCh1.toString();
                     System.out.println("Мимо");
                 }
                 if (si.equals(chrship)) { //моя карта выстрелов и невидимая карта противника
                     StringBuilder changeCh2 = new StringBuilder(warmapmyfire[y]);
-                    changeCh2.setCharAt(x, chrpopal);
+                    changeCh2.replace(x,x+1,chrpopal);
                     warmapmyfire[y]= changeCh2.toString();
                     StringBuilder changeCh3 = new StringBuilder(warmapvs[y]);
-                    changeCh3.setCharAt(x, chrpopal);
+                    changeCh3.replace(x,x+1, chrpopal);
                     warmapvs[y]= changeCh3.toString();
                     System.out.println("Попал");
                 }
