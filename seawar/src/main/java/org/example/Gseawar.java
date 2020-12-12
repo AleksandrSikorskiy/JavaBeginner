@@ -62,7 +62,7 @@ import java.lang.String;
                 int a = i + 65;
                 char b = (char) a;
                 System.out.println(b + " " + warmapmyfire[i] + " | " + warmapmy[i]);
-                System.out.println();
+
             }
             System.out.println("  0123456 | 0123456");
         }
