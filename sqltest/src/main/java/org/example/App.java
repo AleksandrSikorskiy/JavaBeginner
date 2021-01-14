@@ -9,7 +9,7 @@ import java.sql.Statement;
 public class App {
     public static void main(String[] args) {
         // Create a variable for the connection string.
-        String connectionUrl = "jdbc:sqlserver://v-hp-bpm-sql01:1433;databaseName=Camunda;user=cam-bpm-sql>;password=pwd_cam-bpm-sql";
+        String connectionUrl = "jdbc:sqlserver://srv:1433;databaseName=db;user=usrname>;password=pwdusr";
 
         try (Connection con = DriverManager.getConnection(connectionUrl); Statement stmt = con.createStatement();) {
             String SQL = "SELECT * FROM [dbo].[ACT_GE_PROPERTY]";
