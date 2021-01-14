@@ -20,6 +20,19 @@
 
   <dependencies>
     <dependency>
+      <groupId>com.microsoft.sqlserver</groupId>
+      <artifactId>mssql-jdbc</artifactId>
+      <version>8.4.1.jre8</version>
+      <scope>system</scope>
+      <systemPath>${basedir}/libs/mssql-jdbc-8.4.1.jre8.jar</systemPath>
+      <optional>true</optional>
+    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>com.microsoft.sqlserver</groupId>-->
+<!--      <artifactId>mssql-jdbc</artifactId>-->
+<!--      <version>8.4.1.jre8</version>-->
+<!--    </dependency>-->
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.11</version>
