@@ -11,7 +11,6 @@ public class Gseawar {
     public static final String SPACE = " ";
     public static final String STRINGDELIMITER = " | ";
     public static final String EMPTY_LINE = "";
-
     private final int quadSize;
     boolean pobeda = true;
 
@@ -70,9 +69,9 @@ public class Gseawar {
             String strxmapmy = EMPTY_LINE;
             for (int j = 0; j < quadSize; j++) {
                 //   strxmapvs = strxmapvs.concat(arrfillmap[(int) (Math.random() * 2)].trim());
-                strxmapvs = strxmapvs.concat(arrfillmap[getRandomInRange.generation(0, 1)].trim());
+                strxmapvs = strxmapvs.concat(arrfillmap[Random.randomize(0, 1)].trim());
                 //    strxmapmy = strxmapmy.concat(arrfillmap[(int) (Math.random() * 2)].trim());
-                strxmapmy = strxmapmy.concat(arrfillmap[getRandomInRange.generation(0, 1)].trim());
+                strxmapmy = strxmapmy.concat(arrfillmap[Random.randomize(0, 1)].trim());
             }
             warmapvs[i] = strxmapvs;
             warmapmyfire[i] = "0000000";
@@ -120,8 +119,8 @@ public class Gseawar {
     void fireonmapvs() {
         //генерируем случайный выстрел без проверки стрелял ли компьютер туда уже
         String buf = EMPTY_LINE;
-        buf = buf.concat(arryindex[getRandomInRange.generation(0, quadSize)]);
-        int rand = getRandomInRange.generation(0, quadSize);
+        buf = buf.concat(arryindex[Random.randomize(0, quadSize)]);
+        int rand = Random.randomize(0, quadSize);
         buf = buf.concat(arrxindex.substring(rand, rand + 1));
 
         System.out.println("Противник стреляет " + buf);

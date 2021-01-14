@@ -10,17 +10,17 @@ import java.util.Scanner;
 class App {
 
     public static void main(String[] args) throws FileNotFoundException{
-        getWordCount("C:\\Install\\word.txt");
+        getWordCount("C:\\Install\\word.txt","c:\\Install\\grpword.txt");
     }
 
-    public static void getWordCount(String filename) throws FileNotFoundException{
+    public static void getWordCount(String sourceFileName,String destinationFileName) throws FileNotFoundException{
         String[] maxarr=new String[5000];
         int j=0;
         for (j=0;j<5000;j++){
             maxarr[j]="";
         }
         try {
-            File file = new File(filename);
+            File file = new File(sourceFileName);
             Scanner scanner = new Scanner(file);
             int imax = 0;
             String linestr = "";
@@ -34,7 +34,7 @@ class App {
                     }
                 }
             }
-            File fileDestination = new File("c:\\Install\\grpword.txt");
+            File fileDestination = new File(destinationFileName);
             FileWriter bufWrite = null;
             bufWrite = new FileWriter(fileDestination);
             Arrays.sort(maxarr);

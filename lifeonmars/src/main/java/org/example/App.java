@@ -1,43 +1,92 @@
 package org.example;
 
-/**
- * Hello world!
- */
+import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
+// генерация random в диапазоне min..max
 
-class Lifebio {
-    //   Характеристика био жизни
-    boolean blife = true; //признак жизни
-    int typo;  // класс
-    String typoname; // подкласс
-    int drink = 1;  // необходимо воды для жизни
-    int perdrink;  // период питания
-    int kolproductionair; // производит кислорода
-    int perproductionair; // период (цикл) производства кислорода
-    int kolproductioneat; // производит еды
-    int perproductioneat; // период (цикл) производства еды
-    int perpopulation; // период размножения
-    int plusPopulation; // производство себе подобных за период
-    int population; // количество (популяция)
-    int permutation; // периодичность мутации
+class Random {
+    static int randomize(int min, int max) {
+        return ThreadLocalRandom.current().nextInt(min, max);
+    }
 }
 
-class Lifejivo {
-    //   Характеристика животной жизни
-    boolean blife; //признак жизни
-    int typo;  // класс
-    String typoname; // подкласс
-    String name; // личное имя животного(человека)
+class NameClass {
+
+    private String[][] nameclass={{"Гриб","Рыжик", "Белый", "Маслюк", "Груздь", "Мухомор"},
+            {"Растение","Картошка", "Капуста", "Лук", "Чеснок", "Пшеница", "Рис", "Щавель", "Томат", "Огурец", "Тыква", "Кабачок", "Петрушка", "Кинза", "Буряк", "Горох", "Фасоль"},
+            {"Трава","Зверобой", "Лаванда", "Мята", "Шалфей", "Материнка"},
+            {"Сорняк","Одуванчик", "Пырей", "Лебеда", "Горчица", "Ромашка", "Василёк"},
+            {"Кустарник","Смородина", "Крыжовник", "Рябина", "Малина", "Ежевика"},
+            {"Дерево","Вишня", "Орех", "Яблоня", "Персик", "Груша", "Абрикос", "Черешня", "Слива", "Алыча", "Шелковица", "Айва"},
+            {"Животное","Обезьяна", "Собака", "Кот", "Мышь", "Корова", "Овца", "Свинья", "Петух", "Курица", "Рыба"},
+            {"Рептилия","Ящерица", "Черепаха", "Варан", "Крокодил", "Змея", "Уж", "Геккон"},
+            {"Человек","Европеец", "Русотуристо", "ДревнийУкр", "Америкос", "Кореец", "Китаец", "Индиец", "Африканец"}};
+
+    public int lengthnameclass= nameclass.length;
+
+    public String getname(int iclass,int ipodclass){
+        String sname="Класс не определён";
+        if ((iclass>=0)&&(iclass<=lengthnameclass)) {
+            if ((ipodclass>=0)&&(ipodclass<=nameclass[iclass].length)) {
+                sname = nameclass[iclass][ipodclass];
+            }
+
+        }
+        return sname;
+    }
+    public int getlenclass() {
+        return nameclass.length;
+    }
+    public int getlenpodclass(int iclass) {
+        return nameclass[iclass].length;
+    }
+}
+
+class BioLife {
+    //   Характеристика био жизни
+    boolean enable; //признак жизни
+    int codeclass;  // класс
+    int codepodclass; // подкласс
     int drink;  // необходимо воды для жизни
     int eat; // необходимо еды для жизни
     int air; // необходимо воздуха для жизни
-    int perdrink;  // период питья
-    int pereat;  // период питания
-    int perair;  // период дыхания
+    int proddrink; // производит воды
+    int prodeat; // производит еды
+    int prodair; // производит воздуха
     int perpopulation; // период размножения
-    int plusPopulation; // производство себе подобных за период
-    int population; // количество (популяция)
-    int permutation; // периодичность мутаций
+    int addpopulation; // производство себе подобных за период
+    int population=1; // количество (популяция) по умолчанию 1
+    int permutation; // периодичность мутации
+}
+
+class Resources {
+    private int air;
+    private int eat;
+    private int drink;
+
+    public void generation() {
+
+    }
+    public void setair (int iair){
+        air=iair;
+    }
+    public void seteat (int ieat){
+        eat=ieat;
+    }
+    public void setdrink (int idrink){
+        drink=idrink;
+    }
+    public int getair (){
+        return air;
+    }
+    public int geteat (){
+        return eat;
+    }
+    public int getdrink (){
+        return drink;
+    }
+
 
 }
 
@@ -73,6 +122,11 @@ class Generationname {
 }
 
 class Cataclizm {
+    int air;
+    int eat;
+    int drink;
+    int population;
+
     String[] catname = {"Сильный ветер поднял марсианскую пыль",
             "Летнее марсианское Солнце сильно нагрело поверхность",
             "Начал извержение самый большой Вулкан в Солнечной системе Олимп ",
@@ -86,188 +140,75 @@ class Cataclizm {
     String[] catres = {"be", "bv", "beva", "bev", "be", "be", "b", "be", "bev", "be"};
 
     String go() {
+        String sinfo=" уничтожено ";
         int ic = (int) (Math.random() * catname.length);
         if (catres[ic].contains("v")) {
-            res.voda = res.voda - ((int) (Math.random() * 100 + 20));
+            drink= ((int) (Math.random() * 100 + 20));
+            sinfo=sinfo+drink+" воды ";
         }
         if (catres[ic].contains("e")) {
+            eat= ((int) (Math.random() * 100 + 20));
+            sinfo=sinfo+eat+" еды ";
         }
-        if (catres[ic].contains("a")) {
+        if (catres[ic].contains("a"))
+        {
+            air= ((int) (Math.random() * 1000 + 20));
+            sinfo=sinfo+air+" воздуха ";
         }
-        return catname[ic];
+        if (catres[ic].contains("b"))
+        {
+            population= ((int) (Math.random() * 10 + 1));
+            sinfo=sinfo+population+" популяции ";
+        }
+        return catname[ic]+" "+sinfo+".";
     }
+
+    public void setair (int iair){
+        air=iair;
+    }
+    public void seteat (int ieat){
+        eat=ieat;
+    }
+    public void setdrink (int idrink){
+        drink=idrink;
+    }
+    public int getair (){
+        return air;
+    }
+    public int geteat (){
+        return eat;
+    }
+    public int getdrink (){
+        return drink;
+    }
+
 }
 
 class LifeonMars {
     public static void main(String[] args) {
-        Res res = new Res();
-        res.go();
-        String[] randtypo = {"Гриб", "Растение", "Трава", "Сорняк", "Кустарник", "Дерево", "Животное", "Рептилия", "Человек"};
-        String[] randgrib = {"Рыжик", "Белый", "Маслюк", "Груздь", "Мухомор"};
-        String[] randrast = {"Картошка", "Капуста", "Лук", "Чеснок", "Пшеница", "Рис", "Щавель", "Томат", "Огурец", "Тыква", "Кабачок", "Петрушка", "Кинза", "Буряк", "Горох", "Фасоль"};
-        String[] randtrava = {"Зверобой", "Лаванда", "Мята", "Шалфей", "Материнка"};
-        String[] randsor = {"Одуванчик", "Пырей", "Лебеда", "Горчица", "Ромашка", "Василёк"};
-        String[] randkust = {"Смородина", "Крыжовник", "Рябина", "Малина", "Ежевика"};
-        String[] randtree = {"Вишня", "Орех", "Яблоня", "Персик", "Груша", "Абрикос", "Черешня", "Слива", "Алыча", "Шелковица", "Айва"};
-        String[] randjivo = {"Обезьяна", "Собака", "Кот", "Мышь", "Корова", "Овца", "Свинья", "Петух", "Курица", "Рыба"};
-        String[] randrept = {"Ящерица", "Черепаха", "Варан", "Крокодил", "Змея", "Уж", "Геккон"};
-        String[] randpeople = {"Европеец", "Русотуристо", "ДревнийУкр", "Америкос", "Кореец", "Китаец", "Индиец", "Африканец"};
-        int irandtypo = randtypo.length;
-        int igrib = randgrib.length;
-        int irast = randrast.length;
-        int itrava = randtrava.length;
-        int isor = randsor.length;
-        int ikust = randkust.length;
-        int itree = randtree.length;
-        int ijivo = randjivo.length;
-        int irept = randrept.length;
-        int ipeople = randpeople.length;
-        Res res = new Res();
-//        Генерация грибов
-        Lifebio[] agrib = new Lifebio[igrib];
-        for (int i = 0; i < igrib; i++) {
-            agrib[i] = new Lifebio();
-            agrib[i].blife = true;
-            agrib[i].typo = 0;
-            agrib[i].typoname = randgrib[i];
-            agrib[i].drink = 1;
-            agrib[i].perdrink = 14;
-            agrib[i].kolproductionair = 1;
-            agrib[i].perproductionair = 3;
-            agrib[i].kolproductioneat = 1;
-            agrib[i].perproductioneat = 5;
-            agrib[i].perpopulation = 60;
-            agrib[i].plusPopulation = 1000;
-            agrib[i].population = (int) (Math.random() * 10000 + 10);
-            agrib[i].permutation = 60000;
-        }
-        //        Генерация растений
-        Lifebio[] arast = new Lifebio[irast];
-        for (int i = 0; i < irast; i++) {
-            arast[i] = new Lifebio();
-            arast[i].blife = true;
-            arast[i].typo = 1;
-            arast[i].typoname = randrast[i];
-            arast[i].drink = 1;
-            arast[i].perdrink = 7;
-            arast[i].kolproductionair = 3;
-            arast[i].perproductionair = 1;
-            arast[i].kolproductioneat = 8;
-            arast[i].perproductioneat = 60;
-            arast[i].perpopulation = 20;
-            arast[i].plusPopulation = 100;
-            arast[i].population = (int) (Math.random() * 1000 + 10);
-            arast[i].permutation = 7000;
-        }
-        //        Генерация травы
-        Lifebio[] atrava = new Lifebio[itrava];
-        for (int i = 0; i < itrava; i++) {
-            atrava[i] = new Lifebio();
-            atrava[i].blife = true;
-            atrava[i].typo = 2;
-            atrava[i].typoname = randtrava[i];
-            atrava[i].drink = 1;
-            atrava[i].perdrink = 90;
-            atrava[i].kolproductionair = 1;
-            atrava[i].perproductionair = 3;
-            atrava[i].kolproductioneat = 1;
-            atrava[i].perproductioneat = 30;
-            atrava[i].perpopulation = 360;
-            atrava[i].plusPopulation = 3;
-            atrava[i].population = (int) (Math.random() * 10000 + 10);
-            atrava[i].permutation = 70000;
-        }
-        //        Генерация сорняков
-        Lifebio[] asor = new Lifebio[isor];
-        for (int i = 0; i < isor; i++) {
-            asor[i] = new Lifebio();
-            asor[i].blife = true;
-            asor[i].typo = 3;
-            asor[i].typoname = randsor[i];
-            asor[i].drink = 2;
-            asor[i].perdrink = 30;
-            asor[i].kolproductionair = 0;
-            asor[i].perproductionair = 0;
-            asor[i].kolproductioneat = 0;
-            asor[i].perproductioneat = 0;
-            asor[i].perpopulation = 60;
-            asor[i].plusPopulation = 100;
-            asor[i].population = (int) (Math.random() * 50 + 10);
-            asor[i].permutation = 30000;
-        }
-        //        Генерация кустарника
-        Lifebio[] akust = new Lifebio[ikust];
-        for (int i = 0; i < ikust; i++) {
-            akust[i] = new Lifebio();
-            akust[i].blife = true;
-            akust[i].typo = 4;
-            akust[i].typoname = randkust[i];
-            akust[i].drink = 4;
-            akust[i].perdrink = 25;
-            akust[i].kolproductionair = 5;
-            akust[i].perproductionair = 1;
-            akust[i].kolproductioneat = 20;
-            akust[i].perproductioneat = 5;
-            akust[i].perpopulation = 360;
-            akust[i].plusPopulation = 4;
-            akust[i].population = (int) (Math.random() * 500 + 10);
-            akust[i].permutation = 10000;
-        }
-        //        Генерация деревьев
-        Lifebio[] atree = new Lifebio[itree];
-        for (int i = 0; i < itree; i++) {
-            atree[i] = new Lifebio();
-            atree[i].blife = true;
-            atree[i].typo = 5;
-            atree[i].typoname = randtree[i];
-            atree[i].drink = 10;
-            atree[i].perdrink = 90;
-            atree[i].kolproductionair = 50;
-            atree[i].perproductionair = 1;
-            atree[i].kolproductioneat = 200;
-            atree[i].perproductioneat = 360;
-            atree[i].perpopulation = 360;
-            atree[i].plusPopulation = 3;
-            atree[i].population = (int) (Math.random() * 80 + 5);
-            atree[i].permutation = 900;
-        }
-        //        Генерация животных
-        Lifejivo[] ajivo = new Lifejivo[ijivo];
-        for (int i = 0; i < ijivo; i++) {
-
-            ajivo[i] = new Lifejivo();
-            ajivo[i].blife = true;
-            ajivo[i].typo = 6;
-            ajivo[i].typoname = randjivo[i];
-            ajivo[i].drink = 3;
-            ajivo[i].eat = 1;
-            ajivo[i].air = 300;
-            ajivo[i].perdrink = 1;
-            ajivo[i].pereat = 1;
-            ajivo[i].perair = 1;
-            ajivo[i].perpopulation = 720;
-            ajivo[i].plusPopulation = 1;
-            ajivo[i].population = (int) (Math.random() * 1000 + 50);
-            ajivo[i].permutation = 7200000;
-        }
-        //        Генерация рептилий
-        Lifejivo[] arept = new Lifejivo[irept];
-        for (int i = 0; i < irept; i++) {
-
-            arept[i] = new Lifejivo();
-            arept[i].blife = true;
-            arept[i].typo = 7;
-            arept[i].typoname = randrept[i];
-            arept[i].drink = 5;
-            arept[i].eat = 3;
-            arept[i].air = 100;
-            arept[i].perdrink = 5;
-            arept[i].pereat = 3;
-            arept[i].perair = 1;
-            arept[i].perpopulation = 360;
-            arept[i].plusPopulation = 5;
-            arept[i].population = (int) (Math.random() * 25 + 2);
-            arept[i].permutation = 25000000;
+        Resources res = new Resources();
+        NameClass ncl = new NameClass();
+//        ArrayList<BioLife> arrbio=new ArrayList();
+//        Генерация классов и подклассов
+        BioLife[] arrbio = new BioLife[];
+        for (int i = 0; i < ncl.getlenclass(); i++) {
+            for (int j = 0; j<ncl.getlenpodclass(i); j++) {
+                arrbio.
+                agrib[i] = new BioLife();
+                agrib[i].enable = true;
+                agrib[i].codeclass = 0;
+                agrib[i].nameclass = randgrib[i];
+                agrib[i].drinkwater = 1;
+                agrib[i].perdrink = 14;
+                agrib[i].kolproductionair = 1;
+                agrib[i].perproductionair = 3;
+                agrib[i].kolproductioneat = 1;
+                agrib[i].perproductioneat = 5;
+                agrib[i].perpopulation = 60;
+                agrib[i].plusPopulation = 1000;
+                agrib[i].population = (int) (Math.random() * 10000 + 10);
+                agrib[i].permutation = 60000;
+            }
         }
         //        Генерация гуманоидов
         Lifejivo[] apeople = new Lifejivo[res.kpeople];
@@ -304,32 +245,32 @@ class LifeonMars {
         System.out.println("Воздух стал доступен после предварительного терраформирования планеты грибами, компьютер оценил запасы оставшихся спор грибов в районе посадки.");
         int i = 0;
         for (i = 0; i < igrib; i++) {
-            System.out.println(randtypo[0] + " " + agrib[i].typoname + " = " + agrib[i].population + " спор");
+            System.out.println(randtypo[0] + " " + agrib[i].nameclass + " = " + agrib[i].population + " спор");
         }
         System.out.println(kpeople + " колонистов в срочном порядке провели пересчет всех оставшихся ресурсов:");
 
         i = 0;
         for (i = 0; i < irast; i++) {
-            System.out.println(randtypo[1] + " " + arast[i].typoname + " = " + arast[i].population + " штук");
+            System.out.println(randtypo[1] + " " + arast[i].nameclass + " = " + arast[i].population + " штук");
         }
         System.out.println("При переучете обнаружены семена травяных растений которые не планировались для транспортирования.");
         i = 0;
         for (i = 0; i < itrava; i++) {
-            System.out.println(randtypo[2] + " " + atrava[i].typoname + " = " + atrava[i].population + " семян");
+            System.out.println(randtypo[2] + " " + atrava[i].nameclass + " = " + atrava[i].population + " семян");
         }
         System.out.println("Чёрт,чёрт чёрт ! Воскликнул колонист сканеры обнаружили семена сорных растений среди продуктивных семян, произвели их подсчет и поняли что отделить их невозможно.");
         i = 0;
         for (i = 0; i < isor; i++) {
-            System.out.println(randtypo[3] + " " + asor[i].typoname + " = " + asor[i].population + " семян");
+            System.out.println(randtypo[3] + " " + asor[i].nameclass + " = " + asor[i].population + " семян");
         }
         System.out.println("Колонисты добрались до огромных контейнеров и обнаружили саженцы кустов и деревьев.");
         i = 0;
         for (i = 0; i < ikust; i++) {
-            System.out.println(randtypo[4] + " " + akust[i].typoname + " = " + akust[i].population + " единиц");
+            System.out.println(randtypo[4] + " " + akust[i].nameclass + " = " + akust[i].population + " единиц");
         }
         i = 0;
         for (i = 0; i < itree; i++) {
-            System.out.println(randtypo[5] + " " + atree[i].typoname + " = " + atree[i].population + " единиц");
+            System.out.println(randtypo[5] + " " + atree[i].nameclass + " = " + atree[i].population + " единиц");
         }
         System.out.println("Колонисты запустили процесс воссоздания ткани по чтению ДНК животных.");
         System.out.println("Удалось воссоздать животных, среди которых оказались не только домашние:");
@@ -351,7 +292,7 @@ class LifeonMars {
         for (i = 0; i < res.kpeople; i++) {
             System.out.println(randtypo[8] + " " + apeople[i].typoname + " " + apeople[i].name);
         }
-        System.out.println("Во время пересчета произошло случайное событие:");
+        System.out.println("Во время пересчета произошло случайное событие:");Cataclizm.go;
         int nsol = 2;
         int lifekol = 20;
 
