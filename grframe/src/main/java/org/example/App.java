@@ -3,12 +3,12 @@ package org.example;
 import javax.swing.*;
 import java.awt.*;
 
-class Simpleanimation {
+class App {
     int x = 70;
     int y = 70;
 
     public static void main(String[] args) {
-        Simpleanimation gui = new Simpleanimation();
+        App gui = new App();
         gui.go();
     }
 
@@ -33,7 +33,7 @@ class Simpleanimation {
 
     }
 
-    static class MyDrawPanel extends JPanel {
+     class MyDrawPanel extends JPanel {
         public void paintComponent(Graphics g) {
             g.setColor(Color.green);
             g.fillOval(70, 70, 100, 100);
