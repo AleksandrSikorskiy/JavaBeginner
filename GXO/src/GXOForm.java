@@ -21,10 +21,10 @@ public class GXOForm extends JFrame {
     private JLabel XY12;
     private JLabel XY22;
     String[] arrxo=new String[9];
-    String charX="X";
-    String charD=".";
+    static String charX="X";
+    static String charD=".";
 
-    public void onclickJLabel(JLabel vJLabel) {
+    static public void onclickJLabel(JLabel vJLabel) {
         if (vJLabel.getText().equals(charD)) {vJLabel.setText(charX);}
     }
 
@@ -45,21 +45,21 @@ public class GXOForm extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                onJLabel.onclickJLabel(XY10);
+                GXOForm.onclickJLabel(XY10);
             }
         });
         XY20.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                onJLabel.onclickJLabel(XY20);
+                GXOForm.onclickJLabel(XY20);
             }
         });
         XY01.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                onJLabel.onclickJLabel(XY01);
+                GXOForm.onclickJLabel(XY01);
             }
         });        XY11.addMouseListener(new MouseAdapter() {
             @Override
