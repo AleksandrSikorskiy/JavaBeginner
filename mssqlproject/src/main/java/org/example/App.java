@@ -2,13 +2,27 @@ package org.example;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import static javax.swing.JOptionPane.showMessageDialog;
+
 class SayHello extends TimerTask {
     public void run() {
-        System.out.println("5 second left!");
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String sdate;
+                SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+                Date date = new Date(System.currentTimeMillis());
+                sdate=formatter.format(date).toString();      //01234567890123456789012345
+                System.out.println(sdate);
+            }
+        });
+        t1.start();
+
     }
 }
 
@@ -52,21 +66,26 @@ public class App implements ActionListener {
 
     public void prodata(){
         nodata = false;
+//        не заполнено поле сервер
         if (gui.fieldsqlsrv.getText().trim().isEmpty()) {
             showMessageDialog(null, sc.msgsqlsrv);
             nodata = true;
         }
+//        если не заполнено поле порт то по умолчанию 1433
         if (gui.fieldport.getText().trim().isEmpty()) {
             gui.fieldport.setText("1433");
         }
+//        не заполнено поле database
         if (gui.fielddatabase.getText().trim().isEmpty()) {
             showMessageDialog(null, sc.msgdb);
             nodata = true;
         }
+//        не заполнено поле username
         if (gui.fieldusername.getText().trim().isEmpty()) {
             showMessageDialog(null, sc.msgusrname);
             nodata = true;
         }
+//        не заполнено поле password
         if (gui.fieldpass.getText().trim().isEmpty()) {
             showMessageDialog(null, sc.msgusrpass);
             nodata = true;
